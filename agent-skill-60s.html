@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>一分钟掌握 Agent Skill | 大数据与人工智能课程</title>
+<style>
+  :root{
+    --bg:#f6f7f9; --card:#ffffff; --ink:#1a2333; --sub:#5b6577;
+    --line:#e3e7ee; --accent:#3b82f6; --accent-soft:#e8f0fe;
+    --ok:#0f9d6a; --ok-soft:#e6f7f0; --warn:#d97706; --warn-soft:#fdf1e0;
+    --radius:14px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font-family:-apple-system,"Segoe UI","Microsoft YaHei",sans-serif;line-height:1.65;padding:28px 16px 60px}
+  .wrap{max-width:760px;margin:0 auto}
+  header{text-align:center;margin-bottom:26px}
+  header h1{font-size:26px;letter-spacing:.5px}
+  header p{color:var(--sub);margin-top:6px;font-size:14px}
+  .badge{display:inline-block;background:var(--accent-soft);color:var(--accent);font-weight:700;font-size:12px;padding:4px 12px;border-radius:999px;margin-bottom:10px}
+
+  .timer{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px 20px;margin-bottom:22px;display:flex;align-items:center;gap:16px}
+  .timer .ring{width:54px;height:54px;flex:none}
+  .timer .info{flex:1}
+  .timer .info b{font-size:17px}
+  .timer .info span{color:var(--sub);font-size:13px}
+  .bar{height:8px;background:var(--line);border-radius:99px;overflow:hidden;margin-top:8px}
+  .bar i{display:block;height:100%;width:100%;background:var(--accent);border-radius:99px;transform-origin:left;animation:shrink 60s linear forwards}
+  @keyframes shrink{to{transform:scaleX(0)}}
+
+  .cards{display:flex;flex-direction:column;gap:14px;margin-bottom:26px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;transition:box-shadow .2s}
+  .card:hover{box-shadow:0 6px 18px rgba(26,35,51,.06)}
+  .card .tag{display:inline-block;font-size:11px;font-weight:700;color:#fff;background:var(--accent);padding:2px 9px;border-radius:6px;margin-bottom:8px}
+  .card .tag.g{background:var(--ok)}
+  .card .tag.w{background:var(--warn)}
+  .card h2{font-size:17px;margin-bottom:6px}
+  .card p{color:var(--sub);font-size:14px}
+  .card code, .kbd{font-family:Consolas,Menlo,monospace;background:var(--accent-soft);color:#1d4ed8;padding:1px 6px;border-radius:5px;font-size:13px}
+  .card .kbd{background:#eef1f6;color:var(--ink)}
+  .pill{display:inline-block;background:var(--ok-soft);color:var(--ok);font-size:12px;font-weight:600;padding:2px 10px;border-radius:99px;margin-top:8px}
+
+  .quiz h2{font-size:20px;margin-bottom:4px}
+  .quiz .sub{color:var(--sub);font-size:13px;margin-bottom:16px}
+  .q{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;margin-bottom:14px}
+  .q h3{font-size:15px;margin-bottom:10px}
+  .q h3 i{font-style:normal;color:var(--accent);font-weight:800;margin-right:6px}
+  .opt{display:block;width:100%;text-align:left;background:#fbfcfe;border:1.5px solid var(--line);border-radius:10px;padding:10px 14px;margin-bottom:8px;font-size:14px;color:var(--ink);cursor:pointer;font-family:inherit;transition:all .15s}
+  .opt:hover{border-color:var(--accent);background:var(--accent-soft)}
+  .opt.correct{border-color:var(--ok);background:var(--ok-soft);font-weight:600}
+  .opt.wrong{border-color:#ef4444;background:#fef2f2}
+  .opt:disabled{cursor:default;opacity:.85}
+  .opt .mark{float:right;font-weight:800}
+  .explain{display:none;margin-top:10px;background:var(--warn-soft);border:1px solid #f3d9b8;border-radius:10px;padding:10px 14px;font-size:13px;color:#7c4a03}
+  .explain.show{display:block}
+  .score{margin:6px 0 0;font-size:14px;font-weight:600;color:var(--sub)}
+  .score b{color:var(--accent);font-size:17px}
+
+  footer{text-align:center;color:var(--sub);font-size:12px;margin-top:30px}
+  .btn{background:var(--accent);border:none;color:#fff;font-weight:600;padding:10px 22px;border-radius:10px;cursor:pointer;font-size:14px}
+  .btn:hover{filter:brightness(1.05)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="badge">大数据与人工智能 · 学习卡片</div>
+  <h1>一分钟掌握 Agent Skill</h1>
+  <p>看下方 6 张卡片，每张 10 秒 → 底部做 5 道测试题检验掌握度</p>
+</header>
+
+<div class="timer">
+  <svg class="ring" viewBox="0 0 54 54">
+    <circle cx="27" cy="27" r="23" fill="none" stroke="#e3e7ee" stroke-width="6"/>
+    <circle cx="27" cy="27" r="23" fill="none" stroke="#3b82f6" stroke-width="6" stroke-linecap="round"
+      stroke-dasharray="144.5" stroke-dashoffset="0" id="ringArc" transform="rotate(-90 27 27)"/>
+  </svg>
+  <div class="info">
+    <b id="tLeft">60</b> 秒倒计时 · 建议按顺序阅读
+    <div class="bar"><i id="barFill"></i></div>
+  </div>
+</div>
+
+<div class="cards">
+  <div class="card">
+    <span class="tag">① 10s</span>
+    <h2>Agent 是什么？</h2>
+    <p><b>Agent（智能体）</b> = 能"<b>理解目标 → 自主规划 → 调用工具 → 完成行动</b>"的 AI。它不止会聊天，还会像人一样拆解任务、执行步骤（如查数据、写代码、发消息）。</p>
+    <span class="pill">类比：一个有手有脚、会思考的员工</span>
+  </div>
+
+  <div class="card">
+    <span class="tag">② 20s</span>
+    <h2>Skill 是什么？</h2>
+    <p><b>Skill（技能）</b> = 一段"<b>说明书 + 模板</b>"，把某类任务的<b>专业做法、步骤、话术</b>固化下来。Agent 遇到对应任务时，Skill 教它"这件事该怎么做才专业"。</p>
+    <p style="margin-top:6px">本质：<code>SKILL.md</code>（技能说明文档）+ 可能附带的脚本 / 示例 / 资源文件。</p>
+    <span class="pill">类比：给员工的《岗位操作手册》</span>
+  </div>
+
+  <div class="card">
+    <span class="tag">③ 30s</span>
+    <h2>为什么把两者结合？</h2>
+    <p>没有 Skill：Agent 每次都"临场发挥"，质量不稳定。<br>
+       有了 Skill：把<b>专家经验沉淀</b>成可复用技能包 → 稳定、高效、可分享。<b>Agent 是身体，Skill 是技能库。</b></p>
+    <span class="pill">一次沉淀，处处复用</span>
+  </div>
+
+  <div class="card">
+    <span class="tag">④ 40s</span>
+    <h2>一个 Skill 长什么样？</h2>
+    <p>典型结构（目录即一个技能包）：</p>
+    <p style="margin-top:6px">
+      <span class="kbd">my-skill/</span><br>
+      &nbsp;&nbsp;├─ <span class="kbd">SKILL.md</span>　← 核心：<b>描述 + 触发条件 + 操作步骤</b><br>
+      &nbsp;&nbsp;├─ <span class="kbd">scripts/</span>　← 可选：辅助脚本<br>
+      &nbsp;&nbsp;└─ <span class="kbd">references/</span>　← 可选：资料、模板
+    </p>
+    <p style="margin-top:6px"><code>SKILL.md</code> 开头常用 YAML 元信息写明技能<b>名称与适用场景</b>（description），供 Agent 匹配。</p>
+  </div>
+
+  <div class="card">
+    <span class="tag">⑤ 50s</span>
+    <h2>Agent 如何使用 Skill？</h2>
+    <p><b>① 识别</b>：听懂用户请求 → <b>② 匹配</b>：用"技能描述"比对任务 → <b>③ 加载</b>：读取对应 <code>SKILL.md</code> → <b>④ 执行</b>：按技能步骤完成任务。</p>
+    <p style="margin-top:6px">全程对用户透明，技能让 AI 从"会的"变成"<b>专业的</b>"。</p>
+    <span class="pill">触发 = 描述匹配，无需手动开关</span>
+  </div>
+
+  <div class="card">
+    <span class="tag">⑥ 60s</span>
+    <h2>一句话总结 + 上手建议</h2>
+    <p><b>"Agent Skill = 把专业工作流打包，让 AI 按手册办事。"</b></p>
+    <p style="margin-top:6px">想上手？从<b>复现一个已有技能</b>开始：读它的 <code>SKILL.md</code> → 看它怎么描述触发条件 → 试着自己写一个 5 行的迷你技能（如"写会议纪要"）。</p>
+  </div>
+</div>
+
+<div class="quiz">
+  <h2>📝 核心测试题（5 题）</h2>
+  <p class="sub">点击选项查看对错，最后显示得分 —— 全对才算真正掌握！</p>
+  <div id="qBox"></div>
+  <p class="score" id="scoreBox" style="display:none">得分：<b id="scoreNum">0</b> / 5　<span id="scoreTxt"></span></p>
+</div>
+
+<footer>大数据与人工智能课程 · 学习笔记 · 生成于 2026-09-03</footer>
+</div>
+
+<script>
+const QS=[
+ {q:"Agent（智能体）区别于普通聊天机器人的核心特征是？",
+  o:["只会被动回答用户问题","能自主规划任务并调用工具执行","只能处理纯文本","不需要大模型支撑"],
+  a:1,e:"Agent 会理解目标→规划→调用工具→行动；聊天机器人通常只是问答。"},
+ {q:"Skill（技能）的本质是什么？",
+  o:["一段动画特效","一组训练好的神经网络权重","固化了专业做法的说明文档（SKILL.md）+ 可选资源","一种编程语言"],
+  a:2,e:"Skill 是'说明书+模板'，核心为 SKILL.md，把专业流程沉淀成可复用技能包。"},
+ {q:"Agent 如何知道该用哪个 Skill？",
+  o:["用户必须手动输入技能编号","靠 SKILL.md 中的名称与描述做自动匹配","随机抽取一个","每次都必须重新下载"],
+  a:1,e:"Agent 理解用户请求后，用技能包的描述信息比对任务，自动匹配并加载对应 SKILL.md。"},
+ {q:"SKILL.md 文件开头的 YAML 元信息（name/description）主要作用是什么？",
+  o:["让文件更好看","定义样式和颜色","告诉 Agent 这个技能的名字和适用场景，便于匹配","加密技能内容"],
+  a:2,e:"元信息（frontmatter）是技能包的'门牌号'，Agent 靠它判断何时该启用该技能。"},
+ {q:"下面哪种描述最准确？",
+  o:["Skill 可以脱离 Agent 独立运行","Agent 是身体，Skill 是技能库，两者结合才能稳定复用专业能力","Skill 只能用于大数据领域","Skill 越多 Agent 一定越慢"],
+  a:1,e:"Agent 提供执行能力，Skill 提供专业知识，二者结合实现'稳定、高效、可复用'。"}
+];
+const box=document.getElementById('qBox');
+let picked={};
+QS.forEach((it,qi)=>{
+  const d=document.createElement('div');d.className='q';
+  d.innerHTML='<h3><i>'+(qi+1)+'.</i>'+it.q+'</h3>';
+  it.o.forEach((op,oi)=>{
+    const b=document.createElement('button');b.className='opt';b.textContent=String.fromCharCode(65+oi)+'. '+op;
+    b.onclick=()=>{
+      if(picked[qi]!==undefined)return;
+      picked[qi]=oi;
+      [...d.querySelectorAll('.opt')].forEach((x,i)=>{
+        x.disabled=true;
+        if(i===it.a){x.classList.add('correct');x.insertAdjacentHTML('beforeend','<span class="mark">✓</span>');}
+        else if(i===oi){x.classList.add('wrong');x.insertAdjacentHTML('beforeend','<span class="mark">✗</span>');}
+      });
+      const ex=document.createElement('div');ex.className='explain show';ex.textContent='💡 '+it.e;
+      d.appendChild(ex);
+      const done=Object.keys(picked).length;
+      if(done===QS.length){
+        const n=QS.filter((q,i)=>picked[i]===q.a).length;
+        const sc=document.getElementById('scoreBox');sc.style.display='block';
+        document.getElementById('scoreNum').textContent=n;
+        document.getElementById('scoreTxt').textContent=n===5?'🎉 完美掌握！':(n>=3?'不错，再看一遍卡片巩固：':'建议重读卡片后重试');
+      }
+    };
+    d.appendChild(b);
+  });
+  box.appendChild(d);
+});
+
+let t=60;
+const arc=document.getElementById('ringArc');
+const C=144.5;
+setInterval(()=>{
+  t=Math.max(0,t-1);
+  document.getElementById('tLeft').textContent=t;
+  arc.style.strokeDashoffset=(C*(60-t)/60).toFixed(1);
+  if(t===0)clearInterval(this);
+},1000);
+</script>
+</body>
+</html>
