@@ -1,0 +1,30 @@
+# === Python ===
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.venv/
+venv/
+env/
+.ipynb_checkpoints/
+.pytest_cache/
+
+# === 数据文件（大文件不入库，只保留目录说明）===
+data/*
+!data/.gitkeep
+!data/README.md
+*.csv
+*.xlsx
+*.parquet
+*.h5
+*.pkl
+
+# === 编辑器 / IDE ===
+.vscode/
+.idea/
+*.swp
+
+# === 操作系统 ===
+.DS_Store
+Thumbs.db
+desktop.ini
