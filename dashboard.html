@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>课程学习数据看板 · 大数据与人工智能</title>
+<style>
+  :root{
+    --c1:#2563EB;  /* 蓝：信息 / 结构 */
+    --c2:#F59E0B;  /* 橙：进行中 / 行动 */
+    --c3:#10B981;  /* 绿：已完成 / 成果 */
+    --c1-soft:#E3ECFD; --c2-soft:#FDF0DA; --c3-soft:#DEF5EC;
+    --ink:#152238; --sub:#5A6577; --line:#E2E7F0; --page:#F4F6FB;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--page);color:var(--ink);font-family:-apple-system,"Segoe UI","Microsoft YaHei",sans-serif;line-height:1.6;padding:26px 16px 60px}
+  .wrap{max-width:960px;margin:0 auto}
+
+  header{background:linear-gradient(135deg,#1E3A8A 0%,#2563EB 55%,#3B82F6 100%);border-radius:18px;padding:30px 30px 26px;color:#fff;margin-bottom:20px}
+  header h1{font-size:25px;font-weight:700;letter-spacing:.3px}
+  header p{opacity:.9;font-size:13.5px;margin-top:6px}
+  .legend{display:flex;gap:18px;flex-wrap:wrap;margin-top:18px}
+  .legend span{display:flex;align-items:center;gap:7px;font-size:13px;background:rgba(255,255,255,.14);padding:5px 13px;border-radius:999px}
+  .dot{width:11px;height:11px;border-radius:50%;display:inline-block}
+  .d1{background:#93C5FD}.d2{background:#FCD34D}.d3{background:#6EE7B7}
+
+  .kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px}
+  .kpi{background:#fff;border-radius:16px;padding:20px 18px;border-top:5px solid var(--c1);position:relative;overflow:hidden}
+  .kpi:nth-child(2){border-top-color:var(--c2)}
+  .kpi:nth-child(3){border-top-color:var(--c3)}
+  .kpi .lbl{font-size:12.5px;color:var(--sub)}
+  .kpi .num{font-size:34px;font-weight:800;margin:6px 0 2px;color:var(--c1)}
+  .kpi:nth-child(2) .num{color:var(--c2)}
+  .kpi:nth-child(3) .num{color:var(--c3)}
+  .kpi .hint{font-size:12px;color:var(--sub)}
+  .kpi .bar{height:7px;border-radius:99px;background:#EEF1F7;margin-top:12px;overflow:hidden}
+  .kpi .bar i{display:block;height:100%;border-radius:99px;background:var(--c1)}
+  .kpi:nth-child(2) .bar i{background:var(--c2)}
+  .kpi:nth-child(3) .bar i{background:var(--c3)}
+
+  .card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px;margin-bottom:20px}
+  .card h2{font-size:16px;margin-bottom:4px}
+  .card .desc{font-size:12.5px;color:var(--sub);margin-bottom:18px}
+
+  .stack{display:flex;flex-direction:column;gap:13px}
+  .row{display:grid;grid-template-columns:110px 1fr 46px;align-items:center;gap:12px;font-size:13px}
+  .row .name{color:var(--sub)}
+  .track{height:22px;background:#F1F4F9;border-radius:7px;overflow:hidden}
+  .track i{display:block;height:100%;border-radius:7px}
+  .row .val{font-weight:700;text-align:right}
+  .g1 i{background:var(--c1)}.g2 i{background:var(--c2)}.g3 i{background:var(--c3)}
+
+  .timeline{position:relative;padding-left:30px}
+  .timeline:before{content:"";position:absolute;left:9px;top:6px;bottom:6px;width:3px;border-radius:2px;background:linear-gradient(180deg,var(--c1),var(--c2),var(--c3))}
+  .tl{position:relative;margin-bottom:18px}
+  .tl:last-child{margin-bottom:0}
+  .tl .pt{position:absolute;left:-30px;top:4px;width:21px;height:21px;border-radius:50%;border:4px solid #fff;box-shadow:0 0 0 2px currentColor}
+  .tl .pt.b{color:var(--c1);background:var(--c1)}
+  .tl .pt.o{color:var(--c2);background:var(--c2)}
+  .tl .pt.g{color:var(--c3);background:var(--c3)}
+  .tl .date{font-size:12px;color:var(--sub);font-weight:600}
+  .tl .title{font-size:14px;font-weight:700;margin:1px 0 2px}
+  .tl .txt{font-size:12.5px;color:var(--sub)}
+
+  .tri{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .block{border-radius:14px;padding:18px 16px}
+  .block.b1{background:var(--c1-soft);border:1.5px solid #BFD3FA}
+  .block.b2{background:var(--c2-soft);border:1.5px solid #F5D9A0}
+  .block.b3{background:var(--c3-soft);border:1.5px solid #A9E5CE}
+  .block h3{font-size:14px;margin-bottom:8px}
+  .block.b1 h3{color:#1E40AF}.block.b2 h3{color:#B45309}.block.b3 h3{color:#047857}
+  .block ul{margin-left:16px;font-size:12.5px;color:#3C4759}
+  .block li{margin-bottom:4px}
+
+  .lvwrap{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;text-align:center}
+  .lv{border-radius:14px;padding:16px 10px;border:2px solid}
+  .lv.a{border-color:var(--c3);background:var(--c3-soft)}
+  .lv.b{border-color:var(--c2);background:var(--c2-soft)}
+  .lv.c{border-color:var(--c1);background:var(--c1-soft)}
+  .lv .tag{font-size:12px;font-weight:700;color:var(--sub)}
+  .lv .nm{font-size:17px;font-weight:800;margin:4px 0}
+  .lv.a .nm{color:#047857}.lv.b .nm{color:#B45309}.lv.c .nm{color:#1E40AF}
+  .lv .d{font-size:11.5px;color:var(--sub)}
+
+  footer{text-align:center;color:var(--sub);font-size:12px;margin-top:24px}
+  @media(max-width:720px){
+    .kpis,.tri,.lvwrap{grid-template-columns:1fr}
+    .row{grid-template-columns:84px 1fr 40px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>📊 课程学习数据看板</h1>
+  <p>大数据与人工智能 · Mom-Hue · 数据截至 2026-09-10</p>
+  <div class="legend">
+    <span><i class="dot d1"></i>蓝 = 信息与结构</span>
+    <span><i class="dot d2"></i>橙 = 进行中</span>
+    <span><i class="dot d3"></i>绿 = 已完成</span>
+  </div>
+</header>
+
+<div class="kpis">
+  <div class="kpi">
+    <div class="lbl">仓库文件总数</div>
+    <div class="num">14</div>
+    <div class="hint">笔记 / 代码 / 技能包 / 文档</div>
+    <div class="bar"><i style="width:100%"></i></div>
+  </div>
+  <div class="kpi">
+    <div class="lbl">Git 提交次数</div>
+    <div class="num">7</div>
+    <div class="hint">每次提交 = 一次学习存档</div>
+    <div class="bar"><i style="width:70%"></i></div>
+  </div>
+  <div class="kpi">
+    <div class="lbl">学期进度</div>
+    <div class="num">1 / 14</div>
+    <div class="hint">已完成第 1 周，共 14 周计划</div>
+    <div class="bar"><i style="width:7%"></i></div>
+  </div>
+</div>
+
+<div class="card">
+  <h2>📁 仓库内容构成</h2>
+  <div class="desc">各目录文件数量分布（共 14 个文件）</div>
+  <div class="stack">
+    <div class="row g1"><span class="name">笔记 notes/</span><div class="track"><i style="width:100%"></i></div><span class="val">4</span></div>
+    <div class="row g2"><span class="name">技能包 tutor/</span><div class="track"><i style="width:100%"></i></div><span class="val">4</span></div>
+    <div class="row g3"><span class="name">数据集 data/</span><div class="track"><i style="width:50%"></i></div><span class="val">2</span></div>
+    <div class="row g1"><span class="name">根目录文档</span><div class="track"><i style="width:50%"></i></div><span class="val">2</span></div>
+    <div class="row g2"><span class="name">代码 code/</span><div class="track"><i style="width:25%"></i></div><span class="val">1</span></div>
+    <div class="row g3"><span class="name">打包 dist/</span><div class="track"><i style="width:25%"></i></div><span class="val">1</span></div>
+  </div>
+</div>
+
+<div class="card">
+  <h2>🕒 学习里程碑时间线</h2>
+  <div class="desc">从零开始到作业规范化的完整轨迹</div>
+  <div class="timeline">
+    <div class="tl"><span class="pt g"></span>
+      <div class="date">2026-09-03 上午</div>
+      <div class="title">环境搭建完成</div>
+      <div class="txt">安装 Git 2.55 / Python 3.12 / VSCode 1.136，注册 GitHub 账号</div>
+    </div>
+    <div class="tl"><span class="pt g"></span>
+      <div class="date">2026-09-03 上午</div>
+      <div class="title">仓库创建 + 首次推送</div>
+      <div class="txt">创建 big-data-ai，跑通 clone → add → commit → push 全流程</div>
+    </div>
+    <div class="tl"><span class="pt g"></span>
+      <div class="date">2026-09-03 中午</div>
+      <div class="title">自建 Agent Skill 技能包</div>
+      <div class="txt">完成 SKILL.md + 图文教程 + L1~L3 分层自适应测验</div>
+    </div>
+    <div class="tl"><span class="pt b"></span>
+      <div class="date">2026-09-06</div>
+      <div class="title">改造为学习主页</div>
+      <div class="txt">README 导航化，新增笔记模板与学习进度追踪表</div>
+    </div>
+    <div class="tl"><span class="pt o"></span>
+      <div class="date">2026-09-10</div>
+      <div class="title">作业规范化修复</div>
+      <div class="txt">仓库转为公开，补充提交信息、.gitignore 与数据目录说明</div>
+    </div>
+    <div class="tl"><span class="pt o"></span>
+      <div class="date">2026-09-10</div>
+      <div class="title">新增数据看板（本页）</div>
+      <div class="txt">用三色可视化呈现学习数据，便于理解与展示</div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <h2>🧠 知识点地图：Agent Skill</h2>
+  <div class="desc">三色分区理解核心概念（来源：Anthropic 官方文档 / agentskills.io 开放标准）</div>
+  <div class="tri">
+    <div class="block b1">
+      <h3>① 是什么</h3>
+      <ul>
+        <li>一个含 SKILL.md 的文件夹</li>
+        <li>打包指令 + 脚本 + 资源</li>
+        <li>给 agent 领域专业知识</li>
+      </ul>
+    </div>
+    <div class="block b2">
+      <h3>② 怎么用</h3>
+      <ul>
+        <li>启动只加载 name/description</li>
+        <li>任务匹配时读完整 SKILL.md</li>
+        <li>执行中按需读 references</li>
+      </ul>
+    </div>
+    <div class="block b3">
+      <h3>③ 怎么建</h3>
+      <ul>
+        <li>写清 name + description</li>
+        <li>正文分步指令 + 示例</li>
+        <li>复杂内容拆到 references</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <h2>🎯 掌握度分层（自适应测验）</h2>
+  <div class="desc">答对升级、答错降级；L3 连对 2 题即通关</div>
+  <div class="lvwrap">
+    <div class="lv a"><div class="tag">第 1 层</div><div class="nm">L1 入门</div><div class="d">基础概念 · 5 题</div></div>
+    <div class="lv b"><div class="tag">第 2 层</div><div class="nm">L2 进阶</div><div class="d">规范与机制 · 5 题</div></div>
+    <div class="lv c"><div class="tag">第 3 层</div><div class="nm">L3 实战</div><div class="d">开放标准与安全 · 5 题</div></div>
+  </div>
+</div>
+
+<footer>大数据与人工智能课程 · 学习数据看板 · 生成于 2026-09-10</footer>
+</div>
+</body>
+</html>
