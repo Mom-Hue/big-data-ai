@@ -60,6 +60,7 @@
 
 | 目录 | 用途 | 入口 |
 |------|------|------|
+| 📄 `Agent-Skill-学习与测评汇总.md` | **学习+测评完整长文（推荐先读）** | [打开](Agent-Skill-学习与测评汇总.md) |
 | 📊 `dashboard.html` | **可视化数据看板（三色）** | [打开](dashboard.html) |
 | 📝 `notes/` | 每周学习笔记（Markdown） | [打开](notes/) |
 | 💻 `code/` | 课程代码与练习 | [打开](code/) |
