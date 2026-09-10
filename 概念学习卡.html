@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agent Skill 概念学习卡 · 三色速记</title>
+<style>
+  :root{
+    --c1:#2563EB; --c1-soft:#E7EEFD; --c1-line:#BBD0FA;   /* 蓝：概念定义 */
+    --c2:#F59E0B; --c2-soft:#FDF2DE; --c2-line:#F5D9A0;   /* 橙：机制流程 */
+    --c3:#10B981; --c3-soft:#E1F6EE; --c3-line:#A6E6CE;   /* 绿：实践要点 */
+    --ink:#16223A; --sub:#5B6577; --line:#E3E8F1; --page:#F3F6FB;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--page);color:var(--ink);font-family:-apple-system,"Segoe UI","Microsoft YaHei",sans-serif;line-height:1.6;padding:28px 16px 64px}
+  .wrap{max-width:1040px;margin:0 auto}
+
+  header{background:linear-gradient(135deg,#1D3E8F 0%,#2563EB 60%,#4F8BF5 100%);color:#fff;border-radius:18px;padding:30px;margin-bottom:22px}
+  header h1{font-size:26px;font-weight:700}
+  header p{opacity:.92;font-size:13.5px;margin-top:7px}
+  .legend{display:flex;gap:16px;flex-wrap:wrap;margin-top:18px}
+  .legend span{display:flex;align-items:center;gap:7px;font-size:13px;background:rgba(255,255,255,.16);padding:6px 14px;border-radius:999px}
+  .dot{width:11px;height:11px;border-radius:3px;display:inline-block}
+
+  .sect{margin-bottom:30px}
+  .sect-h{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+  .sect-h .num{width:30px;height:30px;border-radius:9px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:14px}
+  .sect-h h2{font-size:17px}
+  .sect-h .cnt{font-size:12px;color:var(--sub);margin-left:auto}
+  .s1 .num{background:var(--c1)} .s2 .num{background:var(--c2)} .s3 .num{background:var(--c3)}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+  .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 17px;border-left:5px solid var(--c1);position:relative;transition:transform .15s,box-shadow .15s}
+  .card:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(22,34,58,.08)}
+  .c1{border-left-color:var(--c1)} .c2{border-left-color:var(--c2)} .c3{border-left-color:var(--c3)}
+  .card .idx{position:absolute;top:14px;right:15px;font-size:11px;font-weight:700;padding:2px 8px;border-radius:6px}
+  .c1 .idx{background:var(--c1-soft);color:#1E40AF}
+  .c2 .idx{background:var(--c2-soft);color:#B45309}
+  .c3 .idx{background:var(--c3-soft);color:#047857}
+  .card h3{font-size:14.5px;font-weight:700;margin-bottom:7px;padding-right:44px}
+  .card .one{font-size:13px;color:var(--ink);margin-bottom:8px}
+  .card .one b{color:var(--c1)}
+  .c2 .one b{color:var(--c2)} .c3 .one b{color:var(--c3)}
+  .card ul{margin-left:16px;font-size:12.5px;color:var(--sub)}
+  .card li{margin-bottom:3px}
+  .card .src{margin-top:9px;padding-top:8px;border-top:1px dashed var(--line);font-size:11.5px;color:var(--sub)}
+  .card .src a{color:var(--c1);text-decoration:none}
+  .card .src a:hover{text-decoration:underline}
+
+  .foot{text-align:center;color:var(--sub);font-size:12px;margin-top:26px}
+  @media(max-width:640px){ .grid{grid-template-columns:1fr} header{padding:22px} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>Agent Skill 概念学习卡</h1>
+  <p>16 张卡片 · 三色速记 · 大数据与人工智能课程 · Mom-Hue</p>
+  <div class="legend">
+    <span><i class="dot" style="background:#93C5FD"></i>蓝卡 = 概念定义（是什么）</span>
+    <span><i class="dot" style="background:#FCD34D"></i>橙卡 = 机制流程（怎么运作）</span>
+    <span><i class="dot" style="background:#6EE7B7"></i>绿卡 = 实践要点（怎么用）</span>
+  </div>
+</header>
+
+<div class="sect s1">
+  <div class="sect-h"><span class="num">1</span><h2>蓝卡 · 概念定义（是什么）</h2><span class="cnt">6 张</span></div>
+  <div class="grid">
+
+    <div class="card c1">
+      <span class="idx">蓝 01</span>
+      <h3>Agent Skill 是什么</h3>
+      <div class="one">一个<b>包含 SKILL.md 的文件夹</b>，把指令、脚本与资源打包，供 AI 按需加载。</div>
+      <ul><li>目录即技能，可版本管理、可移植</li><li>把"通用助手"变成"领域专家"</li></ul>
+      <div class="src">📖 <a href="https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview" target="_blank">Anthropic 官方文档</a></div>
+    </div>
+
+    <div class="card c1">
+      <span class="idx">蓝 02</span>
+      <h3>Agent（智能体）</h3>
+      <div class="one">能<b>理解目标 → 自主规划 → 调用工具 → 完成任务</b>的 AI 系统。</div>
+      <ul><li>不止会聊天，还会执行多步行动</li><li>类比：有手有脚、会思考的员工</li></ul>
+      <div class="src">📖 <a href="https://claude.com/blog/equipping-agents-for-the-real-world-with-agent-skills" target="_blank">Claude 官方博客</a></div>
+    </div>
+
+    <div class="card c1">
+      <span class="idx">蓝 03</span>
+      <h3>Skill（技能）</h3>
+      <div class="one">把某类任务的<b>专业做法固化成可复用的技能包</b>。</div>
+      <ul><li>教 agent"这件事怎么做才专业"</li><li>类比：岗位操作手册</li></ul>
+      <div class="src">📖 <a href="https://claude.com/blog/equipping-agents-for-the-real-world-with-agent-skills" target="_blank">Claude 官方博客</a></div>
+    </div>
+
+    <div class="card c1">
+      <span class="idx">蓝 04</span>
+      <h3>SKILL.md</h3>
+      <div class="one">技能包中<b>唯一必需</b>的文件：YAML 元信息 + 操作指令。</div>
+      <ul><li>技能入口，agent 读取它执行任务</li><li>正文建议分步指引 + 示例</li></ul>
+      <div class="src">📖 <a href="https://agentskills.io/specification" target="_blank">agentskills.io 规范</a></div>
+    </div>
+
+    <div class="card c1">
+      <span class="idx">蓝 05</span>
+      <h3>Frontmatter（元信息）</h3>
+      <div class="one">SKILL.md 顶部的 YAML 字段，<b>name 与 description 必填</b>。</div>
+      <ul><li>name：小写字母/数字/连字符，≤64 字符</li><li>description：≤1024 字符，写清"做什么+何时用"</li></ul>
+      <div class="src">📖 <a href="https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview" target="_blank">Anthropic 官方文档</a></div>
+    </div>
+
+    <div class="card c1">
+      <span class="idx">蓝 06</span>
+      <h3>过程性知识</h3>
+      <div class="one">"<b>怎么做一件事</b>"的操作性知识，是技能要传递的核心。</div>
+      <ul><li>区别于"是什么"的事实性知识</li><li>模型本身缺乏，需外部注入</li></ul>
+      <div class="src">📖 <a href="https://claude.com/blog/equipping-agents-for-the-real-world-with-agent-skills" target="_blank">Claude 官方博客</a></div>
+    </div>
+
+  </div>
+</div>
+
+<div class="sect s2">
+  <div class="sect-h"><span class="num">2</span><h2>橙卡 · 机制流程（怎么运作）</h2><span class="cnt">5 张</span></div>
+  <div class="grid">
+
+    <div class="card c2">
+      <span class="idx">橙 07</span>
+      <h3>渐进式披露</h3>
+      <div class="one">三层按需加载：<b>描述 → 正文 → 资源</b>。</div>
+      <ul><li>第 1 层：只加载 name + description（约 100 tokens）</li><li>第 2 层：命中后读完整 SKILL.md</li><li>第 3 层：执行中按需读 references / 跑 scripts</li></ul>
+      <div class="src">📖 <a href="https://claude.com/blog/equipping-agents-for-the-real-world-with-agent-skills" target="_blank">Claude 官方博客</a></div>
+    </div>
+
+    <div class="card c2">
+      <span class="idx">橙 08</span>
+      <h3>发现 → 激活 → 执行</h3>
+      <div class="one">技能被使用的<b>三步工作流</b>。</div>
+      <ul><li>发现：启动时读所有技能的描述</li><li>激活：任务匹配则读完整 SKILL.md</li><li>执行：按指令操作并调用资源</li></ul>
+      <div class="src">📖 <a href="https://agentskills.io/" target="_blank">agentskills.io</a></div>
+    </div>
+
+    <div class="card c2">
+      <span class="idx">橙 09</span>
+      <h3>触发匹配</h3>
+      <div class="one">靠 <b>description</b> 判断"这个技能是否该用"。</div>
+      <ul><li>描述要同时含功能与使用场景</li><li>无需手动开关，自动匹配</li></ul>
+      <div class="src">📖 <a href="https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview" target="_blank">Anthropic 官方文档</a></div>
+    </div>
+
+    <div class="card c2">
+      <span class="idx">橙 10</span>
+      <h3>何时创建技能</h3>
+      <div class="one">出现这些信号就该沉淀：<b>重复粘贴同一套流程</b>。</div>
+      <ul><li>反复把同一脚本/清单粘进对话</li><li>说明文件从"事实"长成"流程"</li></ul>
+      <div class="src">📖 <a href="https://code.claude.com/docs/zh-TW/skills" target="_blank">Claude Code 文档</a></div>
+    </div>
+
+    <div class="card c2">
+      <span class="idx">橙 11</span>
+      <h3>与 MCP 的关系</h3>
+      <div class="one"><b>MCP 给"手"，Skill 给"方法"</b>，二者互补。</div>
+      <ul><li>MCP：智能体如何连上工具与数据</li><li>Skill：一件事该怎么做</li></ul>
+      <div class="src">📖 <a href="https://agentskills.io/" target="_blank">agentskills.io</a></div>
+    </div>
+
+  </div>
+</div>
+
+<div class="sect s3">
+  <div class="sect-h"><span class="num">3</span><h2>绿卡 · 实践要点（怎么用）</h2><span class="cnt">5 张</span></div>
+  <div class="grid">
+
+    <div class="card c3">
+      <span class="idx">绿 12</span>
+      <h3>标准目录结构</h3>
+      <div class="one"><b>SKILL.md（必需）</b> + scripts/ references/ assets/（可选）。</div>
+      <ul><li>目录名 = 技能名 = name 字段</li><li>按需增删可选目录</li></ul>
+      <div class="src">📖 <a href="https://agentskills.io/specification" target="_blank">agentskills.io 规范</a></div>
+    </div>
+
+    <div class="card c3">
+      <span class="idx">绿 13</span>
+      <h3>scripts/ 的用途</h3>
+      <div class="one">存放<b>可执行代码</b>，处理确定性强的操作。</div>
+      <ul><li>如解析 PDF、排序、批处理</li><li>代码可运行，不必读入上下文</li></ul>
+      <div class="src">📖 <a href="https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview" target="_blank">Anthropic 官方文档</a></div>
+    </div>
+
+    <div class="card c3">
+      <span class="idx">绿 14</span>
+      <h3>references/ 的用途</h3>
+      <div class="one">存放<b>按需读取</b>的参考资料。</div>
+      <ul><li>如流程指南、API 文档、规范</li><li>让 SKILL.md 保持精简</li></ul>
+      <div class="src">📖 <a href="https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview" target="_blank">Anthropic 官方文档</a></div>
+    </div>
+
+    <div class="card c3">
+      <span class="idx">绿 15</span>
+      <h3>安全审计</h3>
+      <div class="one">只用<b>可信来源</b>的技能，用前审计捆绑文件。</div>
+      <ul><li>警惕意外网络请求与异常文件访问</li><li>外部 URL 拉取内容的技能风险高</li></ul>
+      <div class="src">📖 <a href="https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview" target="_blank">Anthropic 官方文档</a></div>
+    </div>
+
+    <div class="card c3">
+      <span class="idx">绿 16</span>
+      <h3>开放标准</h3>
+      <div class="one">Anthropic 2025-10 推出，<b>2025-12 发布为开放标准</b>。</div>
+      <ul><li>官网 agentskills.io，多工具支持</li><li>写一次，跨产品复用</li></ul>
+      <div class="src">📖 <a href="https://agentskills.io/" target="_blank">agentskills.io</a></div>
+    </div>
+
+  </div>
+</div>
+
+<div class="foot">
+  Agent Skill 概念学习卡 · 三色速记 · 大数据与人工智能课程 · 2026-09-10<br>
+  完整讲解与题库见 <b>Agent-Skill-学习与测评汇总.md</b>
+</div>
+</div>
+</body>
+</html>

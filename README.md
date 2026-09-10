@@ -20,23 +20,26 @@
 | 提交日期 | 2026-09-10 |
 | 仓库地址 | https://github.com/Mom-Hue/big-data-ai |
 
-> 本仓库为课程学习成果提交。主要成果：课程学习笔记（`notes/`）、代码练习（`code/`）、以及自建的 Agent Skill 技能包（`agent-skill-tutor/`，含图文教程与分层自适应测验）。
+> 本仓库为课程学习成果提交。主要成果：**Agent Skill 学习与测评汇总长文**、**三色概念学习卡**、课程学习笔记（`notes/`）、代码练习（`code/`）。
 
 ---
 
-## 📊 可视化数据看板
+## 🎨 三色可视化
 
-> 用 **三种颜色** 呈现学习数据，一眼看懂学习进度与成果构成。
+> 用 **三种颜色** 统一组织内容，一眼看懂。
 
 | 颜色 | 含义 | 用于 |
 |------|------|------|
-| 🔵 **蓝** | 信息与结构 | 仓库构成、知识点地图 |
-| 🟠 **橙** | 进行中 | 当前阶段、待办里程碑 |
-| 🟢 **绿** | 已完成 | 已达成目标、已完成提交 |
+| 🔵 **蓝** | 概念定义 / 信息结构 | 是什么、仓库构成 |
+| 🟠 **橙** | 机制流程 / 进行中 | 怎么运作、当前阶段 |
+| 🟢 **绿** | 实践要点 / 已完成 | 怎么用、已达成目标 |
 
-**看板内容**：文件总数 / 提交次数 / 学期进度 · 仓库内容构成 · 学习里程碑时间线 · Agent Skill 知识地图 · 分层掌握度
+**可视化作品：**
 
-👉 **[打开数据看板（dashboard.html）](dashboard.html)**
+| 作品 | 内容 | 入口 |
+|------|------|------|
+| 🃏 **三色概念学习卡** | 16 张卡片速记 Agent Skill 核心概念 | [打开](概念学习卡.html) |
+| 📄 **学习与测评汇总长文** | 学习篇 + 实战篇 + 测评篇 + 成果篇（含三色数据看板） | [打开](Agent-Skill-学习与测评汇总.md) |
 
 ---
 
@@ -58,15 +61,14 @@
 
 ## 📂 目录导航
 
-| 目录 | 用途 | 入口 |
+| 目录 / 文件 | 用途 | 入口 |
 |------|------|------|
 | 📄 `Agent-Skill-学习与测评汇总.md` | **学习+测评完整长文（推荐先读）** | [打开](Agent-Skill-学习与测评汇总.md) |
-| 📊 `dashboard.html` | **可视化数据看板（三色）** | [打开](dashboard.html) |
+| 🃏 `概念学习卡.html` | **三色概念学习卡（可视化速记）** | [打开](概念学习卡.html) |
 | 📝 `notes/` | 每周学习笔记（Markdown） | [打开](notes/) |
 | 💻 `code/` | 课程代码与练习 | [打开](code/) |
 | 🗄️ `data/` | 数据集（大文件不入库） | [打开](data/) |
-| 🤖 `agent-skill-tutor/` | 第一个自建技能包（学 Agent Skill） | [打开](agent-skill-tutor/SKILL.md) |
-| 📦 `dist/` | 打包产物 | [打开](dist/) |
+| 🤖 `agent-skill-tutor/` | 自建技能包（SKILL.md，指向上述教材） | [打开](agent-skill-tutor/SKILL.md) |
 
 **新手从这里开始：**
 1. [学习进度追踪表](notes/学习进度.md) ← 看整个学期的规划
@@ -114,7 +116,8 @@ git log --oneline       # 查看提交历史
 
 ## 📖 学习资源收藏
 
-- [Agent Skill 分层测验](agent-skill-tutor/assets/adaptive-quiz.html)（本地浏览器打开）
+- [Agent Skill 学习与测评汇总长文](Agent-Skill-学习与测评汇总.md)（含 L1~L3 共 15 道测评题）
+- [三色概念学习卡](概念学习卡.html)（浏览器打开）
 - [Anthropic Agent Skills 官方文档](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview)
 - Python 官方教程：https://docs.python.org/zh-cn/3/tutorial/
 
