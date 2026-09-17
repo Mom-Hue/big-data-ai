@@ -20,7 +20,11 @@ data/*
 *.pkl
 
 # === 编辑器 / IDE ===
-.vscode/
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+!.vscode/launch.json
+!.vscode/tasks.json
 .idea/
 *.swp
 
